@@ -1,4 +1,4 @@
-﻿namespace LojaManuel.APIPedidos.Modelos
+﻿namespace LojaManuel.API.Modelos
 {
     public class Pedido
     {

@@ -1,4 +1,4 @@
-﻿namespace LojaManuel.APIPedidos.Modelos
+﻿namespace LojaManuel.API.Modelos
 {
     public class Caixa
     {
@@ -6,9 +6,15 @@
         public double Altura { get; set; }
         public double Largura { get; set; }
         public double Comprimento { get; set; }
-        public List<Produto> Produtos { get; set; } = new List<Produto>();
+        public List<Produto> Produtos { get; set; } = [];
 
-        public Caixa() {
+
+        public double Volume => Altura * Largura * Comprimento;
+        public double VolumeUsado => Produtos.Sum(p => p.Volume);
+        public double VolumeLivre => Volume - VolumeUsado;
+
+        public Caixa()
+        {
             Nome = string.Empty;
             Altura = 0;
             Largura = 0;
@@ -27,9 +33,20 @@
             return produto.Dimensoes.Altura <= Altura && produto.Dimensoes.Largura <= Largura && produto.Dimensoes.Comprimento <= Comprimento;
         }
 
+        public bool CabeVolume(Produto produto)
+        {
+            return produto.Dimensoes.Altura <= Altura && produto.Dimensoes.Largura <= Largura && produto.Dimensoes.Comprimento <= Comprimento;
+        }
+
         public void AdicionarProduto(Produto produto)
         {
             Produtos.Add(produto);
+        }
+
+        public void AdicionarListaProdutos(List<Produto> produtos)
+        {
+            foreach (Produto produto in produtos)
+                Produtos.Add(produto);
         }
 
         public double CalcularEspacoLivre(Produto produto)
